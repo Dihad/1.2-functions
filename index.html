@@ -4,91 +4,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>1.2 functions — Domain · Range · Onto</title>
-  <link rel="icon" type="image/png" href="https://dihad.github.io/Repeating-Decimal-Operations/web%20icon.jpeg" />
 
-  <!-- math.js (expression parsing & numeric evaluation) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
-
-  <!-- MathJax for rendering math (keeps UI nice) -->
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
     :root{
-      --bg: #0b1220;
-      --card: rgba(255,255,255,0.04);
-      --muted: #9fb1bf;
-      --accent: #6ee7b7;
-      --accent-2: #60a5fa;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --bg:#0b1220; --muted:#9fb1bf; --accent:#6ee7b7; --accent-2:#60a5fa;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-
-    html,body {
-      height:100%;
-      margin:0;
-      background:linear-gradient(180deg,#090c16 0%, #02060c 100%);
-      color:#e6eef3;
-      -webkit-font-smoothing:antialiased;
-    }
-
-    .container {
-      max-width:1000px;
-      margin:20px auto;
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
-
-    header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .brand { display:flex; align-items:baseline; gap:12px; }
-    h1 { margin:0; color:var(--accent-2); font-size:1.6rem; }
-    .subtitle { color:var(--muted); font-size:0.95rem; }
-
-    .grid { display:grid; grid-template-columns:1fr 360px; gap:18px; }
-    @media (max-width:920px){ .grid { grid-template-columns:1fr; } }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:16px;
-      box-shadow:0 10px 30px rgba(2,6,12,0.6);
-      border:1px solid rgba(255,255,255,0.02);
-    }
-
-    label { display:block; font-size:13px; color:var(--muted); margin-bottom:8px; }
-    input[type=text], select, textarea {
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,0.04);
-      background:transparent;
-      color:inherit;
-      font-size:15px;
-      outline:none;
-    }
-
-    .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-    button {
-      background: linear-gradient(180deg,var(--accent), var(--accent-2));
-      border:none; padding:10px 14px; border-radius:10px; color:#022; cursor:pointer; font-weight:700;
-      box-shadow:0 6px 18px rgba(96,165,250,0.08);
-    }
-    .btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); font-weight:600; }
-
-    .muted { color:var(--muted); font-size:13px; }
-    .result-block { margin-top:12px; padding:14px; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.02); }
-    pre { white-space:pre-wrap; margin:6px 0; font-size:13px; color:#d7f0fb; background:transparent; }
-
-    .small { font-size:13px; color:var(--muted); }
-
-    footer { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; color:var(--muted); font-size:13px; padding:12px 0; }
-    .logo-pill { padding:6px 10px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted); font-weight:600; font-size:13px; }
-
-    @media (max-width:420px){
-      h1 { font-size:1.25rem; }
-      .card { padding:12px; }
-      button { padding:10px; }
-    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#090c16 0,#02060c 100%);color:#e6eef3}
+    .container{max-width:1000px;margin:20px auto;padding:18px;display:flex;flex-direction:column;gap:18px}
+    header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .brand{display:flex;align-items:baseline;gap:12px}
+    h1{margin:0;color:var(--accent-2);font-size:1.5rem}
+    .subtitle{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media (max-width:920px){ .grid{grid-template-columns:1fr} }
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.02)}
+    label{display:block;color:var(--muted);margin-bottom:8px}
+    input[type=text], select, textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .controls{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    button{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:none;padding:10px 14px;border-radius:10px;color:#022;font-weight:700;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .muted{color:var(--muted);font-size:13px}
+    .result-block{margin-top:12px;padding:14px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+    pre{white-space:pre-wrap;margin:6px 0;color:#d7f0fb}
+    .small{font-size:13px;color:var(--muted)}
+    footer{display:flex;justify-content:space-between;color:var(--muted);padding-top:12px;flex-wrap:wrap}
+    .ok{color:#6ee7b7;font-weight:700}
+    .bad{color:#ffd3a3;font-weight:700}
   </style>
 </head>
 <body>
@@ -98,24 +42,44 @@
         <h1>1.2 functions</h1>
         <div class="subtitle">Domain · Range · Injective · Onto</div>
       </div>
-      <div class="logo-pill"> — Developed by Dihad Hasan 2025</div>
+      <div class="small">Math Lab — Dihad</div>
     </header>
 
     <div class="grid">
       <main class="card">
-        <label for="expr">Function of <code>x</code> — examples: <span class="muted">(2x+1)/(2x-1), x^3, sqrt(x), sin(x)</span></label>
-        <input id="expr" type="text" placeholder="e.g. (2x+1)/(2x-1)" value="(2x+1)/(2x-1)">
+        <label for="expr">Function expression — examples:
+          <span class="muted">(2x+1)/(2x-1), 4x-9/x-2, x^3, sqrt(x), sin(x)</span>
+        </label>
+        <input id="expr" type="text" value="(2x+1)/(2x-1)">
 
-        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-          <div style="flex:1;">
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <div style="width:160px">
+            <label for="varSelect">Variable</label>
+            <select id="varSelect">
+              <option value="x">x</option>
+              <option value="y">y</option>
+              <option value="z">z</option>
+            </select>
+            <div class="muted" style="margin-top:6px">Choose variable used in the expression</div>
+          </div>
+
+          <div style="flex:1">
             <label for="codomain">Codomain (examples: <code>R</code>, <code>R - 1</code>, <code>R - {1}</code>)</label>
-            <input id="codomain" type="text" placeholder="R" value="R">
-            <div class="muted" style="margin-top:6px">Type <code>R</code> for ℝ, or <code>R - 1</code> / <code>R - {1}</code> for ℝ \ {1}.</div>
+            <input id="codomain" type="text" value="R">
+            <div class="muted" style="margin-top:6px">Type <code>R</code> or <code>R - {1}</code>; commas for multiple entries</div>
           </div>
         </div>
 
-        <div class="controls" style="margin-top:12px;">
-          <button id="computeBtn">Analyze</button>
+        <div style="margin-top:12px;display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+          <div style="width:200px">
+            <label for="valueInput">Value for variable</label>
+            <input id="valueInput" type="text" placeholder="e.g. 2">
+            <div class="muted" style="margin-top:6px">Numeric value to evaluate f(value) and f⁻¹(value)</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="computeBtn">Analyze & Evaluate</button>
           <button id="clearBtn" class="btn-ghost">Clear</button>
         </div>
 
@@ -127,30 +91,25 @@
       <aside class="card">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <div style="font-weight:700">Quick info</div>
-          <div class="muted" style="font-size:12px">Function analyzer</div>
+          <div class="muted" style="font-size:12px">Now supports x, y, z + value evaluation</div>
         </div>
 
-        <hr>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
 
-        <div class="small" style="margin-bottom:8px">
-          Enter a mathematical expression using <code>x</code>. For codomain examples:
-          <ul style="margin:8px 0 0 16px; color:var(--muted); padding:0;">
-            <li><code>R</code> — all real numbers (renders as ℝ).</li>
-            <li><code>R - 1</code> or <code>R - {1}</code> — means ℝ \ {1}.</li>
-          </ul>
+        <div class="small">
+          If you write a fraction without parentheses like <code>4x-9/x-2</code>, the tool will try to interpret it as
+          <code>(4x-9)/(x-2)</code> when that seems sensible. Still, explicit parentheses are recommended.
         </div>
 
-        <hr>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
 
         <div class="small"><strong>Tips</strong>
-          <ol style="margin:8px 0 0 16px; color:var(--muted);">
-            <li>Use parentheses for fractions: <code>(2x+1)/(2x-1)</code>.</li>
-            <li>Square root: <code>sqrt(x)</code> or <code>x^(1/2)</code>.</li>
-            <li>Raise to powers with <code>^</code> or <code>pow(base,expo)</code>: <code>x^2</code>, <code>(x+1)^3</code>, <code>2^(x+1)</code>.</li>
-            <li>Implicit multiplication works: <code>2x</code> ≡ <code>2*x</code>. Use parentheses when needed: <code>2(x+1)</code>.</li>
-            <li>Trig and logs: <code>sin(x)</code>, <code>cos(x)</code>, <code>log(x)</code> (natural), <code>log(x,10)</code> (base 10).</li>
-            <li>Codomain exclusions: <code>R - {1,2}</code> or <code>R - 1</code>.</li>
-            <li>Decimals & fractions are allowed: <code>1/3</code>, <code>0.333</code>.</li>
+          <ol style="margin:8px 0 0 16px;color:var(--muted)">
+            <li>Fractions: <code>(2x+1)/(2x-1)</code>.</li>
+            <li>Powers: <code>x^2</code>, <code>(x+1)^3</code>.</li>
+            <li>sqrt: <code>sqrt(x)</code> or <code>x^(1/2)</code>.</li>
+            <li>Use the Variable selector if you use <code>y</code> or <code>z</code> in your expression.</li>
+            <li>The Value input is evaluated into both f(value) and f⁻¹(value) (when inverse can be found).</li>
           </ol>
         </div>
       </aside>
@@ -158,348 +117,429 @@
 
     <footer>
       <div>Developed by Dihad 2025</div>
-      <div class="muted"></div>
+      <div class="small"></div>
     </footer>
   </div>
 
   <script>
-    /* helpers and small utilities */
-    const $ = selector => document.querySelector(selector);
+    // Helper short-hands
+    const $ = s => document.querySelector(s);
 
-    function isRealNumber(v) {
-      return typeof v === 'number' && Number.isFinite(v);
-    }
+    // Basic utilities
+    function isRealNumber(v) { return typeof v === 'number' && Number.isFinite(v); }
 
     function escapeHtml(unsafe) {
       if (unsafe === null || unsafe === undefined) return '';
-      return String(unsafe)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+      return String(unsafe).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                           .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
 
-    function preprocess(input) {
-      if (!input || typeof input !== 'string') return input || '';
-      let s = input.trim();
-      s = s.replace(/×/g, '*').replace(/÷/g, '/').replace(/[−–—]/g, '-');
-      s = s.replace(/\s+/g, ' ');
-      s = s.replace(/(\d|\))\s*(?=[a-zA-Z(])/g, '$1*');
-      s = s.replace(/([a-zA-Z\)])\s*(?=\d|\()/g, '$1*');
-      s = s.replace(/([a-zA-Z])\s+([a-zA-Z])/g, '$1*$2');
-      s = s.replace(/\+\+/g, '+').replace(/--/g, '+').replace(/\+\-/g, '-').replace(/\-\+/g, '-');
+    // Preprocess user input: normalize characters and insert implicit multiplication
+    function preprocess(str) {
+      if (!str || typeof str !== 'string') return str || '';
+      let s = str.trim();
+      s = s.replace(/×/g,'*').replace(/÷/g,'/').replace(/[−–—]/g,'-');
+      s = s.replace(/\s+/g,' ');
+      s = s.replace(/(\d|\))\s*(?=[a-zA-Z(])/g,'$1*');
+      s = s.replace(/([a-zA-Z\)])\s*(?=\d|\()/g,'$1*');
+      s = s.replace(/([a-zA-Z])\s+([a-zA-Z])/g,'$1*$2');
+      s = s.replace(/\+\+/g,'+').replace(/--/g,'+').replace(/\+\-/g,'-').replace(/\-\+/g,'-');
       return s;
     }
 
-    function prettyNumber(val) {
-      if (!isRealNumber(val)) return String(val);
-      if (Math.abs(val - Math.round(val)) < 1e-9) return `${Math.round(val)}`;
-      try {
-        const frac = math.fraction(val);
-        if (Math.abs(frac.valueOf() - val) < 1e-12) {
-          return `\\frac{${frac.n}}{${frac.d}}`;
-        }
-      } catch (e) {}
-      return (+val.toFixed(8)).toString();
+    // For inputs like "4x-9/x-2" attempt to add grouping to treat as numerator/denominator
+    function findTopLevelSlashIndex(s, variableChar) {
+      let level = 0;
+      for (let i = 0; i < s.length; i++) {
+        const ch = s[i];
+        if (ch === '(') level++;
+        else if (ch === ')') level = Math.max(0, level - 1);
+        else if (ch === '/' && level === 0) return i;
+      }
+      return -1;
     }
 
-    /* symbolic detection of linear-fraction (a1 x + b1) / (a2 x + b2) */
-    function getLinearCoeffs(exprStr) {
+    function wrapFractionIfNeeded(raw) {
+      const idx = findTopLevelSlashIndex(raw);
+      if (idx === -1) return raw;
+      const numerator = raw.slice(0, idx).trim();
+      const denominator = raw.slice(idx + 1).trim();
+      const numHasPlusMinus = /[+\-]/.test(numerator.replace(/^\-/, ''));
+      const denHasPlusMinus = /[+\-]/.test(denominator.replace(/^\-/, ''));
+      const numIsWrapped = numerator.startsWith('(') && numerator.endsWith(')');
+      const denIsWrapped = denominator.startsWith('(') && denominator.endsWith(')');
+      if ((numHasPlusMinus && !numIsWrapped) || (denHasPlusMinus && !denIsWrapped)) {
+        return `${numIsWrapped ? numerator : '('+numerator+')'}/${denIsWrapped ? denominator : '('+denominator+')'}`;
+      }
+      return raw;
+    }
+
+    // Pretty formatting for numbers (integers shown as ints, rational as fraction when exact)
+    function prettyNumber(v) {
+      if (!isRealNumber(v)) return String(v);
+      if (Math.abs(v - Math.round(v)) < 1e-9) return `${Math.round(v)}`;
+      try {
+        const f = math.fraction(v);
+        if (Math.abs(f.valueOf() - v) < 1e-12) return `\\frac{${f.n}}{${f.d}}`;
+      } catch(e) {}
+      return (+v.toFixed(8)).toString();
+    }
+
+    // Detect linear function coefficients (used for symbolic detection)
+    function getLinearCoeffs(exprStr, varName) {
       try {
         const compiled = math.compile(exprStr);
-        const y0 = compiled.evaluate({ x: 0 });
-        const y1 = compiled.evaluate({ x: 1 });
-        const y2 = compiled.evaluate({ x: 2 });
+        const scope0 = {}; scope0[varName] = 0;
+        const scope1 = {}; scope1[varName] = 1;
+        const scope2 = {}; scope2[varName] = 2;
+        const y0 = compiled.evaluate(scope0);
+        const y1 = compiled.evaluate(scope1);
+        const y2 = compiled.evaluate(scope2);
         if (!isRealNumber(y0) || !isRealNumber(y1) || !isRealNumber(y2)) return null;
         const a = y1 - y0;
         const b = y0;
-        if (Math.abs((a * 2 + b) - y2) < 1e-6) return { a: +a, b: +b };
-      } catch (e) { /* parsing/eval failed */ }
+        if (Math.abs((a*2 + b) - y2) < 1e-6) return {a:+a, b:+b};
+      } catch(e) {}
       return null;
     }
 
-    function detectLinearFraction(node) {
+    // Detect linear fraction of form (a1 t + b1) / (a2 t + b2)
+    function detectLinearFraction(node, varName) {
       if (!node || !node.isOperatorNode || node.op !== '/') return null;
-      const left = node.args[0], right = node.args[1];
-      const leftStr = left.toString();
-      const rightStr = right.toString();
-      const L = getLinearCoeffs(leftStr);
-      const R = getLinearCoeffs(rightStr);
-      if (L && R) return { a1: L.a, b1: L.b, a2: R.a, b2: R.b, leftStr, rightStr };
+      const leftStr = node.args[0].toString();
+      const rightStr = node.args[1].toString();
+      const L = getLinearCoeffs(leftStr, varName);
+      const R = getLinearCoeffs(rightStr, varName);
+      if (L && R) return {a1:L.a, b1:L.b, a2:R.a, b2:R.b};
       return null;
     }
 
-    /* numeric evaluation helper with fixed sampling range */
-    function tryEval(compiled, x) {
+    // Safe evaluator for a compiled expression with chosen variable name
+    function tryEval(compiled, varName, val) {
       try {
-        const y = compiled.evaluate({ x });
+        const scope = {}; scope[varName] = val;
+        const y = compiled.evaluate(scope);
         if (typeof y === 'object' && y !== null && ('re' in y)) {
-          if (Math.abs(y.im || 0) > 1e-9) return { ok: false };
-          return { ok: true, y: y.re };
+          if (Math.abs(y.im || 0) > 1e-9) return {ok:false};
+          return {ok:true, y:y.re};
         }
-        if (isRealNumber(y)) return { ok: true, y };
-        return { ok: false };
-      } catch (e) {
-        return { ok: false };
-      }
+        if (isRealNumber(y)) return {ok:true, y};
+        return {ok:false};
+      } catch(e) { return {ok:false}; }
     }
 
-    /* parse codomain text and extract R-style exclusions */
+    // Parse codomain text to detect R and exclusions; produce plain display text "R" or "R - {1}"
     function parseCodomain(text) {
-      const raw = (text || '').trim();
-      if (!raw) return { type: 'other', raw, latex: '' };
-
-      const t = raw.replace(/\s+/g, ' ').trim();
-      const Rmatch = /^R\b/i.test(t) || /\\mathbb\{R\}/.test(t) || /ℝ/.test(t);
-      if (!Rmatch) return { type: 'other', raw: t, latex: escapeHtml(t) };
-
+      const raw = (text||'').trim();
+      if (!raw) return {type:'other', raw:'', display:'', excluded:[]};
+      const t = raw.replace(/\s+/g,' ').trim();
+      const isR = /^R\b/i.test(t) || /\\mathbb\{R\}/.test(t) || /ℝ/.test(t);
+      if (!isR) return {type:'other', raw:t, display:escapeHtml(t), excluded:[]};
       let excluded = [];
       const dashMatch = t.match(/R\s*-\s*(\{?.+\}?)/i);
       if (dashMatch && dashMatch[1]) {
         let body = dashMatch[1].trim();
         body = body.replace(/^\{/, '').replace(/\}$/, '').trim();
-        const parts = body.split(',').map(s => s.trim()).filter(Boolean);
+        const parts = body.split(',').map(s=>s.trim()).filter(Boolean);
         for (const p of parts) {
-          try {
-            const v = math.evaluate(p);
-            if (isRealNumber(v)) excluded.push(+v);
-          } catch (e) {}
+          try { const v = math.evaluate(p); if (isRealNumber(v)) excluded.push(+v); } catch(e){}
         }
       } else {
-        const setminusMatch = t.match(/setminus\s*\{?([^\}]+)\}?/i);
-        if (setminusMatch && setminusMatch[1]) {
-          const parts = setminusMatch[1].split(',').map(s => s.trim());
-          for (const p of parts) {
-            try {
-              const v = math.evaluate(p);
-              if (isRealNumber(v)) excluded.push(+v);
-            } catch (e) {}
-          }
+        const setminus = t.match(/setminus\s*\{?([^\}]+)\}?/i);
+        if (setminus && setminus[1]) {
+          const parts = setminus[1].split(',').map(s=>s.trim());
+          for (const p of parts) { try { const v = math.evaluate(p); if (isRealNumber(v)) excluded.push(+v); } catch(e){} }
         }
       }
-
-      let latex = '\\mathbb{R}';
-      if (excluded.length) {
-        const items = excluded.map(v => prettyNumber(v)).join(', ');
-        latex = `\\mathbb{R} \\setminus \\{ ${items} \\}`;
-      }
-      return { type: 'R', raw: t, excluded, latex };
+      const display = excluded.length ? `R - {${excluded.map(x => prettyNumber(x)).join(', ')}}` : 'R';
+      return {type:'R', raw:t, excluded, display};
     }
 
-    /* injectivity heuristic from sampled points */
-    function checkInjective(xs, ys) {
-      if (ys.length < 5) return { injective: false, reason: 'insufficient samples' };
-      let inc = true, dec = true;
-      for (let i = 1; i < ys.length; i++) {
-        if (ys[i] <= ys[i - 1] + 1e-9) inc = false;
-        if (ys[i] >= ys[i - 1] - 1e-9) dec = false;
+    // Heuristic injectivity check from samples
+    function checkInjectiveFromSamples(xs, ys) {
+      if (ys.length < 5) return {injective:false, reason:'insufficient samples'};
+      let inc=true, dec=true;
+      for (let i=1;i<ys.length;i++){
+        if (ys[i] <= ys[i-1] + 1e-9) inc=false;
+        if (ys[i] >= ys[i-1] - 1e-9) dec=false;
       }
-      if (inc || dec) return { injective: true, reason: 'monotonic across sampled domain' };
-
+      if (inc || dec) return {injective:true, reason:'monotonic across sampled domain'};
       const seen = {};
-      for (let i = 0; i < ys.length; i++) {
+      for (let i=0;i<ys.length;i++){
         const key = Math.round(ys[i] * 1e6);
-        if (seen[key] !== undefined && Math.abs(seen[key] - xs[i]) > 1e-6) {
-          return { injective: false, reason: 'same y for different sampled x' };
-        }
+        if (seen[key] !== undefined && Math.abs(seen[key] - xs[i]) > 1e-6) return {injective:false, reason:'same y for different sampled x'};
         seen[key] = xs[i];
       }
-      return { injective: true, reason: 'no collisions in sampled points (heuristic)' };
+      return {injective:true, reason:'no collisions in sampled points (heuristic)'};
     }
 
-    /* helper to wrap LaTeX for MathJax */
-    function latexWrap(latexString) {
-      if (!latexString || String(latexString).trim() === '') return '';
-      return `\\(${latexString}\\)`;
+    // Numerical solver: try to find t such that f(t) = target using Newton-like iterations from multiple seeds
+    function findPreimageNumeric(compiled, varName, target) {
+      const maxSeeds = 21;
+      const seeds = [];
+      for (let s = -50; s <= 50; s += 5) seeds.push(s);
+      const tol = 1e-7;
+      const maxIter = 60;
+
+      function evalAt(x) {
+        try {
+          const res = compiled.evaluate({ [varName]: x });
+          if (typeof res === 'object' && res !== null && ('re' in res)) {
+            if (Math.abs(res.im || 0) > 1e-9) return null;
+            return res.re;
+          }
+          if (isRealNumber(res)) return res;
+        } catch(e) {}
+        return null;
+      }
+
+      for (const s0 of seeds) {
+        let x = s0;
+        let converged = false;
+        for (let iter = 0; iter < maxIter; iter++) {
+          const fx = evalAt(x);
+          if (fx === null || !isFinite(fx)) { break; }
+          const err = fx - target;
+          if (Math.abs(err) < 1e-8) { converged = true; break; }
+          // numerical derivative
+          const h = 1e-6 * (Math.abs(x) + 1);
+          const fxh = evalAt(x + h);
+          if (fxh === null || !isFinite(fxh)) break;
+          const deriv = (fxh - fx) / h;
+          if (!isFinite(deriv) || Math.abs(deriv) < 1e-12) {
+            // fallback: small secant step
+            x = x - err * 0.01;
+          } else {
+            x = x - err / deriv;
+          }
+          if (!isFinite(x) || Math.abs(x) > 1e12) break;
+        }
+        if (converged) {
+          const final = evalAt(x);
+          if (final !== null && Math.abs(final - target) < 1e-6) return x;
+        } else {
+          // quick check: if last fx close enough
+          const fx = evalAt(x);
+          if (fx !== null && Math.abs(fx - target) < 1e-6) return x;
+        }
+      }
+      return null;
     }
 
-    /* UI elements */
-    const inputEl = $('#expr');
+    // UI elements
+    const exprEl = $('#expr');
+    const varSelectEl = $('#varSelect');
     const codomainEl = $('#codomain');
+    const valueInputEl = $('#valueInput');
     const computeBtn = $('#computeBtn');
     const clearBtn = $('#clearBtn');
     const resultsEl = $('#results');
 
     clearBtn.addEventListener('click', () => {
-      inputEl.value = '';
+      exprEl.value = '';
+      varSelectEl.value = 'x';
       codomainEl.value = 'R';
-      resultsEl.innerHTML = '<div class="small">Cleared — enter a function and press Analyze.</div>';
-      if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+      valueInputEl.value = '';
+      resultsEl.innerHTML = '<div class="small">Cleared — enter a function and press Analyze & Evaluate.</div>';
     });
 
     computeBtn.addEventListener('click', async () => {
-      const rawInput = (inputEl.value || '').trim();
+      const rawExpr = (exprEl.value || '').trim();
+      const varName = (varSelectEl.value || 'x').trim();
       const codomainText = (codomainEl.value || '').trim();
+      const valueText = (valueInputEl.value || '').trim();
 
-      if (!rawInput) {
-        resultsEl.innerHTML = '<div class="small">Enter a function.</div>';
+      if (!rawExpr) { resultsEl.innerHTML = '<div class="small">Enter a function expression.</div>'; return; }
+
+      resultsEl.innerHTML = '<div class="small">Analyzing…</div>';
+
+      // Try to wrap ambiguous fractions
+      const wrapped = wrapFractionIfNeeded(rawExpr);
+
+      // Replace variable letters: ensure mathjs sees the chosen variable as the symbol
+      // (we'll not replace characters, but compile uses the varName in scope)
+      const pre = preprocess(wrapped);
+
+      // Parse expression
+      let parsed;
+      try { parsed = math.parse(pre); } catch (err) {
+        resultsEl.innerHTML = `<div class="small" style="color:#ffd3a3"><strong>Parse error:</strong> ${escapeHtml(err.message)}<br><pre>${escapeHtml(pre)}</pre></div>`;
         return;
       }
 
-      resultsEl.innerHTML = `<div class="small">Parsing and analyzing…</div>`;
-
-      const expr = preprocess(rawInput);
-
-      let parsedNode;
-      try {
-        parsedNode = math.parse(expr);
-      } catch (err) {
-        resultsEl.innerHTML = `<div class="small" style="color:#ffd3a3"><strong>Parse error:</strong> ${escapeHtml(err.message)}<br>Attempted expression: <pre>${escapeHtml(expr)}</pre></div>`;
-        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+      // Build compiled expression that uses varName as variable
+      let compiled;
+      try { compiled = math.compile(pre); } catch (err) {
+        resultsEl.innerHTML = `<div class="small" style="color:#ffd3a3"><strong>Compile error:</strong> ${escapeHtml(err.message)}</div>`;
         return;
       }
 
-      const codomainObj = parseCodomain(codomainText);
+      // Parse codomain
+      const codomain = parseCodomain(codomainText);
 
-      /* Symbolic path: detect linear fractional (Mobius) function */
-      const lf = detectLinearFraction(parsedNode);
+      // Try symbolic linear-fraction detection on parse tree (respecting chosen variable)
+      const lf = detectLinearFraction(parsed, varName);
+
+      // If numeric value input provided, parse it to number
+      let numericValue = null;
+      if (valueText !== '') {
+        try {
+          numericValue = math.evaluate(valueText);
+          if (!isRealNumber(numericValue)) numericValue = null;
+        } catch(e) { numericValue = null; }
+      }
+
+      // If linear-fraction detected, compute exact domain/range/inverse symbolically
       if (lf) {
-        const { a1, b1, a2, b2 } = lf;
+        const {a1,b1,a2,b2} = lf;
+        let domainDisplay, rangeDisplay, inverseDisplay;
 
-        let domainLatex;
         if (Math.abs(a2) > 1e-12) {
           const root = -b2 / a2;
-          domainLatex = `\\mathbb{R} \\setminus \\{ ${prettyNumber(root)} \\}`;
+          domainDisplay = `R - {${prettyNumber(root)}}`;
         } else {
-          domainLatex = (Math.abs(b2) < 1e-12) ? '\\varnothing' : '\\mathbb{R}';
+          domainDisplay = (Math.abs(b2) < 1e-12) ? '∅' : 'R';
         }
 
-        let rangeLatex;
-        let excludedVal = null;
         if (Math.abs(a2) > 1e-12) {
-          excludedVal = a1 / a2;
-          rangeLatex = `\\mathbb{R} \\setminus \\{ ${prettyNumber(excludedVal)} \\}`;
+          const excluded = a1 / a2;
+          rangeDisplay = `R - {${prettyNumber(excluded)}}`;
         } else {
-          rangeLatex = '\\mathbb{R}';
+          rangeDisplay = 'R';
         }
 
-        const inverseLatex = `f^{-1}(x) = \\dfrac{ ${prettyNumber(b1)} - ${prettyNumber(b2)} x }{ ${prettyNumber(a2)} x - ${prettyNumber(a1)} }`;
+        inverseDisplay = `f⁻¹(${varName}) = (${prettyNumber(b1)} - ${prettyNumber(b2)} ${varName})/(${prettyNumber(a2)} ${varName} - ${prettyNumber(a1)})`;
+
+        // Evaluate f(value) and f^{-1}(value) if numeric value given
+        let fAtValText = '—';
+        let invAtValText = '—';
+        if (numericValue !== null) {
+          const ev = tryEval(compiled, varName, numericValue);
+          fAtValText = ev.ok ? String(ev.y) : 'undefined';
+          // For linear-fraction, inverse formula is explicit; evaluate inverse formula by compiling it
+          try {
+            const invExpr = `(${b1} - ${b2}*(${varName})) / (${a2}*(${varName}) - ${a1})`;
+            const invCompiled = math.compile(invExpr);
+            const invEval = tryEval(invCompiled, varName, numericValue);
+            invAtValText = invEval.ok ? String(invEval.y) : 'undefined';
+          } catch(e) {
+            invAtValText = 'error';
+          }
+        }
+
         const injectiveText = 'Yes (one-to-one on its domain)';
 
+        // Onto check vs codomain (symbolic)
         let ontoFlag = false;
         let ontoReason = '';
-
-        if (codomainObj.type === 'R') {
-          if (rangeLatex.includes('setminus')) {
-            if (codomainObj.excluded.length === 0) {
-              ontoFlag = false;
-              ontoReason = `Range is ${rangeLatex} which excludes ${prettyNumber(excludedVal)}, so not onto \\(\\mathbb{R}\\).`;
-            } else {
-              const match = codomainObj.excluded.some(e => Math.abs(e - excludedVal) < 1e-9);
-              if (match && codomainObj.excluded.length === 1) {
-                ontoFlag = true;
-                ontoReason = `Range excludes exactly ${prettyNumber(excludedVal)}, matching codomain exclusion — onto the specified codomain.`;
-              } else {
-                ontoFlag = false;
-                ontoReason = `Range excludes ${prettyNumber(excludedVal)} but codomain excludes ${codomainObj.excluded.join(', ')} — they don't match.`;
-              }
+        if (codomain.type === 'R') {
+          if (rangeDisplay.startsWith('R - {')) {
+            const m = rangeDisplay.match(/R - \{(.+)\}/);
+            const excludedVal = m ? Number(m[1]) : NaN;
+            if (codomain.excluded.length === 0) { ontoFlag = false; ontoReason = `Range ${rangeDisplay} excludes ${prettyNumber(excludedVal)}, so not onto R.`; }
+            else {
+              const match = codomain.excluded.some(e => Math.abs(e - excludedVal) < 1e-9);
+              if (match && codomain.excluded.length === 1) { ontoFlag = true; ontoReason = 'Range exclusion matches codomain exclusion — onto the specified codomain.'; }
+              else { ontoFlag = false; ontoReason = `Range excludes ${prettyNumber(excludedVal)} but codomain excludes ${codomain.display}.`; }
             }
           } else {
-            if (codomainObj.excluded.length === 0) {
-              ontoFlag = true;
-              ontoReason = 'Range covers all ℝ — onto.';
-            } else {
-              ontoFlag = false;
-              ontoReason = `Range is ℝ but codomain excludes ${codomainObj.excluded.join(', ')} — not onto the specified codomain.`;
-            }
+            ontoFlag = (codomain.excluded.length === 0);
+            ontoReason = ontoFlag ? 'Range covers R — onto.' : `Range is R but codomain excludes ${codomain.display} — not onto specified codomain.`;
           }
-        } else {
-          ontoFlag = false;
-          ontoReason = 'Codomain not recognized as ℝ-style; symbolic onto-check only supports ℝ-style codomains.';
-        }
+        } else { ontoFlag = false; ontoReason = 'Codomain not recognized as R-style; symbolic onto-check limited.'; }
 
-        const html = [
-          `<div class="small"><strong>Original input:</strong> <code>${escapeHtml(rawInput)}</code></div>`,
-          `<div class="small"><strong>Interpreted:</strong> <pre>${escapeHtml(expr)}</pre></div>`,
-          `<div style="margin-top:8px"><strong>Detected form:</strong> \\(\\dfrac{a_1 x + b_1}{a_2 x + b_2}\\) with \\(a_1=${prettyNumber(a1)},\\; b_1=${prettyNumber(b1)},\\; a_2=${prettyNumber(a2)},\\; b_2=${prettyNumber(b2)}\\)</div>`,
-          `<div style="margin-top:8px"><strong>Domain (exact):</strong> ${latexWrap(domainLatex)}</div>`,
-          `<div style="margin-top:8px"><strong>Range (exact):</strong> ${latexWrap(rangeLatex)}</div>`,
-          `<div style="margin-top:8px"><strong>Inverse function (exact):</strong> ${latexWrap(inverseLatex)}</div>`,
-          `<div style="margin-top:8px"><strong>Injective (one-one)?</strong> ${escapeHtml(injectiveText)}</div>`,
-          `<div style="margin-top:8px"><strong>Codomain specified:</strong> ${latexWrap(codomainObj.latex)}</div>`,
-          `<div style="margin-top:8px"><strong>Onto (surjective to specified codomain)?</strong> ${ontoFlag ? '<strong style="color:#6ee7b7">Yes</strong>' : '<strong style="color:#ffd3a3">No</strong>'} <div class="small muted" style="margin-top:6px">${escapeHtml(ontoReason)}</div></div>`
-        ].join('');
+        const html = `
+          <div class="small"><strong>Original:</strong> <code>${escapeHtml(rawExpr)}</code></div>
+          <div class="small"><strong>Interpreted:</strong> <pre>${escapeHtml(pre)}</pre></div>
+          <div style="margin-top:8px"><strong>Variable:</strong> ${varName}</div>
+          <div style="margin-top:8px"><strong>Domain:</strong> ${domainDisplay}</div>
+          <div style="margin-top:8px"><strong>Range:</strong> ${rangeDisplay}</div>
+          <div style="margin-top:8px"><strong>Inverse (exact):</strong> <code>${escapeHtml(inverseDisplay)}</code></div>
+          <div style="margin-top:8px"><strong>Injective?</strong> ${injectiveText}</div>
+          <div style="margin-top:8px"><strong>Codomain given:</strong> ${codomain.display || escapeHtml(codomainText)}</div>
+          <div style="margin-top:8px"><strong>Onto?</strong> ${ontoFlag ? '<span class="ok">Yes</span>' : '<span class="bad">No</span>'} <div class="small muted">${escapeHtml(ontoReason)}</div></div>
+          <div style="margin-top:10px"><strong>Evaluation:</strong></div>
+          <div style="margin-top:6px" class="small"><strong>f(${escapeHtml(String(numericValue))}):</strong> ${escapeHtml(fAtValText)}</div>
+          <div style="margin-top:6px" class="small"><strong>f⁻¹(${escapeHtml(String(numericValue))}):</strong> ${escapeHtml(invAtValText)}</div>
+        `;
 
         resultsEl.innerHTML = html;
-        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
         return;
       }
 
-      /* numeric fallback path (sampling) */
+      // Fallback numeric path: sample function, produce approximate range and try to invert numerically
       try {
-        const compiled = math.compile(expr);
+        const compiledFn = compiled;
         const xmin = -50, xmax = 50, step = 0.5;
-        const xs = [];
-        const ys = [];
-
+        const xs = [], ys = [];
         for (let x = xmin; x <= xmax + 1e-12; x = +(x + step).toFixed(12)) {
-          const r = tryEval(compiled, x);
+          const r = tryEval(compiledFn, varName, x);
           if (r.ok) { xs.push(x); ys.push(r.y); }
         }
 
-        let rangeLatex = '\\varnothing';
+        let rangeText = '∅';
         if (ys.length) {
           const minY = Math.min(...ys), maxY = Math.max(...ys);
-          rangeLatex = `\\left[ ${(+minY.toFixed(6))},\\; ${(+maxY.toFixed(6))} \\right] \\text{ (approx)}`;
+          rangeText = `[${minY.toFixed(6)}, ${maxY.toFixed(6)}] (approx)`;
         }
 
-        const inj = checkInjective(xs, ys);
+        const inj = checkInjectiveFromSamples(xs, ys);
 
+        // Evaluate f(value) if possible
+        let fAtValText = '—';
+        let invAtValText = '—';
+        if (numericValue !== null) {
+          const ev = tryEval(compiledFn, varName, numericValue);
+          fAtValText = ev.ok ? String(ev.y) : 'undefined';
+
+          // Try numeric inverse: find t such that f(t) = numericValue
+          const preimage = findPreimageNumeric(compiledFn, varName, numericValue);
+          invAtValText = preimage === null ? 'not found' : String(preimage);
+        }
+
+        // Onto heuristic
         let ontoFlag = false;
         let ontoReason = '';
-
-        if (codomainObj.type === 'R') {
-          if (!ys || ys.length < 6) {
-            ontoFlag = false;
-            ontoReason = 'Insufficient numeric samples to determine onto.';
-          } else {
+        if (codomain.type === 'R') {
+          if (!ys || ys.length < 6) { ontoFlag = false; ontoReason = 'Insufficient samples to determine onto.'; }
+          else {
             const span = Math.abs(Math.max(...ys) - Math.min(...ys));
-            if (codomainObj.excluded.length === 0) {
-              if (span > 100) {
-                ontoFlag = true;
-                ontoReason = 'Sampled range is wide — heuristically covers ℝ (approx).';
-              } else {
-                ontoFlag = false;
-                ontoReason = `Sampled numeric range appears finite (span ≈ ${span.toFixed(3)}) — unlikely onto ℝ.`;
-              }
+            if (codomain.excluded.length === 0) {
+              if (span > 100) { ontoFlag = true; ontoReason = 'Sampled range is wide — heuristically covers R.'; }
+              else { ontoFlag = false; ontoReason = `Sampled numeric range appears finite (span≈${span.toFixed(3)}) — unlikely onto R.`; }
             } else {
               const tol = Math.max(1e-3, span * 1e-6);
-              let allExcludedMissing = true;
-              for (const ex of codomainObj.excluded) {
+              let excludedMissing = true;
+              for (const ex of codomain.excluded) {
                 const near = ys.some(v => Math.abs(v - ex) < tol);
-                if (near) { allExcludedMissing = false; break; }
+                if (near) { excludedMissing = false; break; }
               }
-              if (allExcludedMissing && span > 50) {
-                ontoFlag = true;
-                ontoReason = `Samples avoid excluded values (${codomainObj.excluded.join(',')}) and show wide coverage — heuristically onto.`;
-              } else {
-                ontoFlag = false;
-                ontoReason = `Either samples contain excluded values or coverage not wide enough (span=${span.toFixed(3)}) — not confidently onto.`;
-              }
+              ontoFlag = excludedMissing && span > 50;
+              ontoReason = ontoFlag ? 'Samples avoid excluded values and show wide coverage — heuristically onto.' : `Either samples include excluded values or coverage is too small (span=${span.toFixed(3)}) — not confidently onto.`;
             }
           }
         } else {
           ontoFlag = false;
-          ontoReason = 'Codomain not recognized as ℝ-style; numeric onto-check limited.';
+          ontoReason = 'Codomain not recognized as R-style; numeric onto-check limited.';
         }
 
-        const html = [
-          `<div class="small"><strong>Original input:</strong> <code>${escapeHtml(rawInput)}</code></div>`,
-          `<div class="small"><strong>Interpreted:</strong> <pre>${escapeHtml(expr)}</pre></div>`,
-          `<div style="margin-top:8px"><strong>Domain (approx):</strong> Numeric sampling over [${xmin}, ${xmax}] (step ${step})</div>`,
-          `<div style="margin-top:8px"><strong>Range (approx):</strong> ${latexWrap(rangeLatex)}</div>`,
-          `<div style="margin-top:8px"><strong>Injective (one-one)?</strong> ${inj.injective ? '<strong style="color:#6ee7b7">Likely yes</strong>' : '<strong style="color:#ffd3a3">Likely no</strong>'} <div class="small muted" style="margin-top:6px">${escapeHtml(inj.reason)}</div></div>`,
-          `<div style="margin-top:8px"><strong>Codomain specified:</strong> ${latexWrap(codomainObj.latex)}</div>`,
-          `<div style="margin-top:8px"><strong>Onto (surjective to specified codomain)?</strong> ${ontoFlag ? '<strong style="color:#6ee7b7">Likely yes</strong>' : '<strong style="color:#ffd3a3">Likely no</strong>'} <div class="small muted" style="margin-top:6px">${escapeHtml(ontoReason)}</div></div>`
-        ].join('');
-
+        const html = `
+          <div class="small"><strong>Original:</strong> <code>${escapeHtml(rawExpr)}</code></div>
+          <div class="small"><strong>Interpreted:</strong> <pre>${escapeHtml(pre)}</pre></div>
+          <div style="margin-top:8px"><strong>Variable:</strong> ${varName}</div>
+          <div style="margin-top:8px"><strong>Domain (approx):</strong> Numeric sampling over [${xmin}, ${xmax}]</div>
+          <div style="margin-top:8px"><strong>Range (approx):</strong> ${rangeText}</div>
+          <div style="margin-top:8px"><strong>Injective?</strong> ${inj.injective ? '<span class="ok">Likely yes</span>' : '<span class="bad">Likely no</span>'} <div class="small muted">${escapeHtml(inj.reason)}</div></div>
+          <div style="margin-top:8px"><strong>Codomain given:</strong> ${codomain.display || escapeHtml(codomainText)}</div>
+          <div style="margin-top:8px"><strong>Onto?</strong> ${ontoFlag ? '<span class="ok">Likely yes</span>' : '<span class="bad">Likely no</span>'} <div class="small muted">${escapeHtml(ontoReason)}</div></div>
+          <div style="margin-top:10px"><strong>Evaluation:</strong></div>
+          <div style="margin-top:6px" class="small"><strong>f(${escapeHtml(String(numericValue))}):</strong> ${escapeHtml(fAtValText)}</div>
+          <div style="margin-top:6px" class="small"><strong>f⁻¹(${escapeHtml(String(numericValue))}):</strong> ${escapeHtml(invAtValText)}</div>
+        `;
         resultsEl.innerHTML = html;
-        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
         return;
       } catch (err) {
         resultsEl.innerHTML = `<div class="small" style="color:#ffd3a3"><strong>Error:</strong> ${escapeHtml(err && err.message ? err.message : String(err))}</div>`;
-        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
         return;
       }
     });
